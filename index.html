@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+   <title>:: Culqi ::</title>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="dist/css/style.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- Fuentes -->
+<link rel="stylesheet" href="dist/css/fontawesome.css" />
+<link rel="stylesheet" href="dist/css/fa-solid.css" />
+
+</head>
+<body>
+   <div id="app">
+<!--       <list :lista="list"></list> 
+ -->   <div class="container">
+      <h1><img class="logo" src="dist/img/culqi_logo.png" height="100" width="100" alt=""></h1>
+   </div>
+   <section class="content__movie">
+   <div class="container">
+
+      <div class="row">
+<!--           <pre>{{ list[0]  }}</pre>
+ -->
+   <template id="list-template">
+         <!-- Movie -->
+      <div class="col-sm-4 sb-preview" v-for="(item, index) in list" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index">
+
+         
+
+
+      <div class="card">
+      <img class="card-img-top" :src="`https://image.tmdb.org/t/p/w500${item.poster_path}`" :title="`${item.original_title}`">
+      <div class="card-body">
+      <h6 class="card-title">{{ item.title }}</h6>
+      <p class="card-text text-warning">Action, Adventure, Sci-Fi</p>
+      <div>
+      <span><img src="dist/img/Icons/heart.svg" alt="">{{item.vote_average}}</span>
+      <button type="button" v-on:click="getMovie(index)"  class="btn btn-warning float-right" data-toggle="modal" data-target=".modalculqi">Detalle</button></div>
+      </div>
+      </div>
+      </div>
+   <!-- End Movie -->
+   </template>
+
+
+
+<!-- pagination -->
+<div class="btn pagination col-md-2 offset-md-5 justify-content-center" >
+   <div v-for="item in 4" >
+      <a href="" @click.prevent="pag = item">
+      <i class="fa fa-circle" aria-hidden="true"></i></a>
+   </div>
+</div>
+<!-- end pagination -->
+
+
+   </div>
+   </div>
+   </section>
+
+   <!-- FOOTER -->
+   <footer class="footer">
+      <div class="container">
+         <div class="row">
+                  <div class="col-sm-4 culqi">CULQI
+                  </div>
+                  <div class="col-sm-4 text-center">
+                     <div class="row">
+                         <div class="col-sm-4 text-right">
+                           <a href="#"><img src="dist/img/Icons/tw.png" alt="Twitter"></a>
+                         </div>
+                         <div class="col-sm-4 text-center">
+                           <a href="#"><img src="dist/img/Icons/fb.png" alt="Facebook"></a>
+                         </div>
+                         <div class="col-sm-4 text-left">
+                           <a href="#"><img src="dist/img/Icons/in.png" alt="Instagram"></a>
+                         </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-4 text-right culqi__tryouts">CULQI TRYOUTS
+                  </div>
+         </div>
+      </div>
+    </footer>
+   <!-- end FOOTER -->
+
+       <!-- MODAL -->
+      <div class="modal fade modalculqi" id="Modalc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+      <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+
+      <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" height="600" width="400">
+      <div><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+
+      <div class="card" style="width: 100%;">
+      <div class="card-body">
+      <h4 class="card-title">{{ movie.title }}</h4>
+      <span class="float-right idioma"> {{ movie.original_language }} </span><p class="text-warning">Action, Adventure, Comedy, Fantasy, Science Fiction </p>
+      <div class="row">
+      <div class="col-sm-3 text-center leyenda"><img src="dist/img/Icons/heart_full.svg" alt="">{{movie.vote_average}} <br><span>Rating</span></div>
+      <div class="col-sm-3 text-center leyenda"><img src="dist/img/Icons/popularity.png" height="40" width="40" alt=""> {{movie.popularity}} <br><span>Popularity</span></div>
+      <div class="col-sm-3 text-center leyenda"><img src="dist/img/Icons/votes.png" height="40" width="40" alt="">{{movie.vote_count}} <br><span>Votes</span></div>
+      </div></div>
+      </div>
+
+      <p class="txt">{{movie.overview}}</p>
+      <div class="fecha">
+      <i class="fa fa-calendar" aria-hidden="true"></i> 25 OCT
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <!-- END MODAL -->
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.1/vue-resource.min.js" ></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="dist/js/culqi.js"></script>
+
+</body>
+</html>
